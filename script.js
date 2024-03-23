@@ -6,7 +6,7 @@ const computerSelectionOptions = {
 function capitalizeFirstLetter(str) {
     return str[0].toUpperCase() + str.slice(1).toLowerCase();
 }
-
+const ROUNDS = 5;
 const drawMessage = () => `Draw`;
 const winnerMessage = (playerSelection, computerSelection) => {
     return `You win! ${playerSelection} beats ${computerSelection}`;
@@ -22,7 +22,7 @@ function getRandomNumber(value) {
 function getComputerChoice() {
     return computerSelectionOptions[getRandomNumber(3)];
 }
-function checkWinner(playerSelection, computerSelection) {
+function getWinner(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) { return drawMessage(); }
 
     if (computerSelection === "Rock" && playerSelection === "Paper" ||
@@ -34,11 +34,11 @@ function checkWinner(playerSelection, computerSelection) {
     return loserMessage(playerSelection, computerSelection);
 }
 function playGame() {
-    for (let i = 0; i < 5; ++i) {
-        let userChoice = prompt("Enter Rock Paper or Scissors: ")
+    for (let i = 0; i < ROUNDS; ++i) {
+        let userChoice = prompt("Enter Rock Paper or Scissors: ");
         if (userChoice === null) { break; }
         userChoice = capitalizeFirstLetter(userChoice);
-        roundResult = checkWinner(userChoice, getComputerChoice());
+        roundResult = getWinner(userChoice, getComputerChoice());
         console.log(roundResult);
     }
 }
