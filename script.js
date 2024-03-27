@@ -6,6 +6,8 @@ const computerSelectionOptions = {
 function capitalizeFirstLetter(str) {
     return str[0].toUpperCase() + str.slice(1).toLowerCase();
 }
+let playerWon = 0;
+let computerWon = 0;
 const ROUNDS = 5;
 const drawMessage = () => `Draw`;
 const winnerMessage = (playerSelection, computerSelection) => {
@@ -33,12 +35,56 @@ function getWinner(playerSelection, computerSelection) {
     }
     return loserMessage(playerSelection, computerSelection);
 }
-function playGame() {
-    for (let i = 0; i < ROUNDS; ++i) {
-        let userChoice = prompt("Enter Rock Paper or Scissors: ");
-        if (userChoice === null) { break; }
-        userChoice = capitalizeFirstLetter(userChoice);
-        roundResult = getWinner(userChoice, getComputerChoice());
-        console.log(roundResult);
+function increaseCounter() {
+    const message = document.querySelector(".message > h3").innerText;
+    switch (message) {
+        case "You win": playerWon++;
+        case "You lose": computerWon++;
     }
 }
+function changeCounterMessage() {
+    let counters = document.querySelectorAll(".space-between.message > p");
+    counters[0].innerText = counters[0].innerText.split(":")[0] + ": " + playerWon;
+    counters[1].innerText = counters[1].innerText.split(":")[0] + ": " + computerWon;
+}
+function roundEndMessage() {
+    let smallText = document.querySelector(".message > h4");
+    computerWon = 0;
+    playerWon = 0;
+    smallText.innerText = "round is ended";
+}
+function changeCounters() {
+    increaseCounter();
+    changeCounterMessage();
+    if (computerWon === 5 || playerWon === 5) {
+        roundEndMessage()
+    }
+}
+function changeWinnerMessage(winnerMessage) {
+    let bigText = document.querySelector(".message > h3");
+    let smallText = document.querySelector(".message > h4");
+
+    if (playerWon < ROUNDS && computerWon < ROUNDS) {
+        let arr = winnerMessage.split("!"); arr.push("");
+        bigText.innerText = arr[0];
+        smallText.innerText = arr[1].trim();
+
+    }
+}
+function playRound(playerSelection) {
+    const computerSelection = getComputerChoice();
+    let winnerMessage = getWinner(playerSelection, computerSelection);
+    changeWinnerMessage(winnerMessage);
+    changeCounters();
+}
+
+function main() {
+    let buttons = document.querySelector(".item-list > ul");
+    buttons.addEventListener("click", (e) => {
+        const img = e.target;
+        if (img.alt !== undefined) {
+            playRound(img.alt);
+        }
+    });
+}
+main()
