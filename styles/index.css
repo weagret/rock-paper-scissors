@@ -37,6 +37,7 @@ main {
 .space-between {
     flex-direction: row;
     justify-content: space-around;
+    gap: 1em;
     flex-wrap: wrap;
 }
 ul {
