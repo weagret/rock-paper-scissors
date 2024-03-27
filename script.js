@@ -38,8 +38,8 @@ function getWinner(playerSelection, computerSelection) {
 function increaseCounter() {
     const message = document.querySelector(".message > h3").innerText;
     switch (message) {
-        case "You win": playerWon++;
-        case "You lose": computerWon++;
+        case "You win": playerWon++; break;
+        case "You lose": computerWon++; break;
     }
 }
 function changeCounterMessage() {
