@@ -9,6 +9,10 @@ function capitalizeFirstLetter(str) {
 let playerWon = 0;
 let computerWon = 0;
 const ROUNDS = 5;
+
+const BODY = document.querySelector("body");
+const HEADER = document.querySelector("header");
+const FOOTER = document.querySelector("footer");
 const drawMessage = () => `Draw`;
 const winnerMessage = (playerSelection, computerSelection) => {
     return `You win! ${playerSelection} beats ${computerSelection}`;
@@ -78,6 +82,31 @@ function playRound(playerSelection) {
     changeCounters();
 }
 
+function changeToWhiteTheme(e) {
+    e.alt = "sun goes down";
+    e.src = "./images/sun-down.png";
+    BODY.style.color = "#000000";
+    BODY.style.backgroundColor = "#A5A5A5";
+    HEADER.style.backgroundColor = "#565656";
+    FOOTER.style.backgroundColor = "#565656";
+}
+function changeToBlackTheme(e) {
+    e.alt = "sun goes up";
+    e.src = "./images/sun-up.png";
+    BODY.style.color = "#FF5500";
+    BODY.style.backgroundColor = "#191A21";
+    HEADER.style.backgroundColor = "#2D3045";
+    FOOTER.style.backgroundColor = "#2D3045";
+}
+
+function changeTheme(e) {
+    if (e.alt === "sun goes up") {
+        changeToWhiteTheme(e);
+    } else {
+        changeToBlackTheme(e);
+    }
+}
+
 function main() {
     let buttons = document.querySelector(".item-list > ul");
     buttons.addEventListener("click", (e) => {
@@ -85,6 +114,10 @@ function main() {
         if (img.alt !== undefined) {
             playRound(img.alt);
         }
+    });
+    let themeBtn = document.querySelector("nav > ul > li > img");
+    themeBtn.addEventListener("click", (e) => {
+        changeTheme(e.target);
     });
 }
 main()
